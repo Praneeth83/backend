@@ -111,25 +111,6 @@ func login(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{"token": tokenString})
 }
 
-func autoLogin(c echo.Context) error {
-	tokenString := c.Request().Header.Get("Authorization")
-	if tokenString == "" {
-		return c.JSON(http.StatusUnauthorized, echo.Map{"error": "No token provided"})
-	}
-
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return jwtSecret, nil
-	})
-	if err != nil || !token.Valid {
-		return c.JSON(http.StatusUnauthorized, echo.Map{"error": "Invalid token"})
-	}
-
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-
-	return c.JSON(http.StatusOK, echo.Map{"message": "Auto-login successful", "email": email})
-}
-
 func protected(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
