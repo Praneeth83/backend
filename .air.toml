@@ -1,0 +1,6 @@
+# .air.toml
+[build]
+cmd = "go build -o main.exe"
+bin = "main.exe"
+include_ext = ["go"]
+exclude_dir = ["vendor"]
