@@ -48,7 +48,6 @@ func main() {
 	e.Use(middleware.Recover())
 	e.POST("/signup", signup)
 	e.POST("/login", login)
-	e.GET("/auto-login", autoLogin)
 	r := e.Group("/protected")
 	r.Use(jwtmiddleware.WithConfig(jwtmiddleware.Config{
 		SigningKey: jwtSecret,
